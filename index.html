@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+  <title>SVG Car Transformation</title>
+
+    <style>
+      #carContainer {
+        background-color: yellow;
+        width: 400px;
+        height: 400px;
+        display: grid;
+        place-items: center;
+      } /* Sets up the grid, with the background as yellow while ensuring it is centered for the container */
+      #car {
+        transform-origin: center;
+        transform-box: fill-box;
+      } /* This to ensure the car always stay in the center and display within the container */
+
+      #translateButtons {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        grid-template-areas:
+          ". up ."
+          " left  . right "
+          ". down .";
+          gap: 10px;
+          width: fit-content;
+          margin-top: 15px;
+        } /* ensures the layout of the buttons */
+
+        #upButton {
+          grid-area: up;
+        }
+
+        #downButton {
+          grid-area: down;
+        }
+
+        #leftButton {
+          grid-area: left;
+        }
+
+        #rightButton {
+          grid-area: right;
+        }
+
+        /* Positions buttons using CSS Grid areas */
+      </style>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function () { //delays the javascript until html is laoded otherwise null
+
+        let x = 0;
+        let y = 0;
+        let rotation = 0;  // sets the base of the car to 0 for the transform and rotation
+
+        const car = document.getElementById("car"); // ensures it calls the svg
+
+        function updateCar() { // Updates the car position and rotation
+          car.style.transform =
+          `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
+        }
+
+        document.getElementById("upButton").addEventListener("click", function () {
+          y -= 10;
+          updateCar(); // Moves the car up wards by decreasing the y axis value
+      });
+
+      document.getElementById("downButton").addEventListener("click", function () {
+        y += 10;
+        updateCar(); // Moves the car down wards by increasing the y axis value
+    });
+
+    document.getElementById("leftButton").addEventListener("click", function () {
+      x -= 10;
+      updateCar(); // Moves the car left by decreasing the x axis value
+  });
+
+  document.getElementById("rightButton").addEventListener("click", function () {
+    x += 10;
+    updateCar(); // Moves the car right by increasing the x axis value
+});
+
+document.getElementById("rotateButton").addEventListener("click", function () {
+  rotation = document.getElementById("inputNumber").value;
+  updateCar(); // Moves the car based on the number inputted by the user
+});
+});
+
+</script>
+
+</head>
+<br><br>
+<body>
+
+<div id="carContainer">
+
+  <svg id="car" width="200" height="150" viewBox="120 130 190 120"> <!-- to ensure the svg has a container and guidelines  -->
+
+    <polygon stroke="purple" stroke-width="4" fill="red"
+    points="
+    140,220
+    140,188
+    168,155
+    230,155
+    245,182
+    280,184
+    285,220"
+    />
+    <!-- All the coordinates to make the shape of the car using polygon -->
+
+    <path d="M 170 219 A 15 15 0 0 0 200 219" stroke="black" stroke-width="3" fill="white"/> <!-- left wheel -->
+    <path d="M 175 218 A 10 10 0 0 0 195 218" stroke="black" stroke-width="4" fill="black"/>
+
+    <path d="M 230 219 A 15 15 0 0 0 260 219" stroke="black" stroke-width="3" fill="white"/> <!-- right wheel -->
+    <path d="M 235 218 A 10 10 0 0 0 255 218" stroke="black" stroke-width="4" fill="black"/>
+
+  </svg>
+
+</div>
+
+<div id="translateButtons">
+
+
+<button id="upButton">Translate Up</button>
+<button id="downButton">Translate Down</button>
+<button id="leftButton">Translate Left</button> <!-- create  directional buttons   -->
+<button id="rightButton">Translate Right</button>
+
+</div>
+
+<br><br>
+
+<label for="inputNumber">Rotation in Degrees:</label>
+
+  <input type="number" id="inputNumber"> <!-- create the rotation button for input  -->
+
+<button id="rotateButton">Rotate</button>
+
+</body>
+</html>
